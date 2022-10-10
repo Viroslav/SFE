@@ -1,1 +1,3 @@
 some text in bar.txt
+
+second commit line
