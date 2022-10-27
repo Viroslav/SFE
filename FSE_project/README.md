@@ -6,6 +6,7 @@ The programm can parse and calculate different mathematical expressions.
 - calculate the simplest arithmetic operations: "+", "-", "*", "/", "%", "!", "p" (exponentiation p), "s" (sqrt)
 - set and use variable values
 - parse expressions with brackets and various mathematical expressions including all possible arithmetic operations and setted variables
+- use integer and floating point numbers up to 3 decimal places 
 
 ## How to use it?:
 - use ";" in the end of the string (!!!)
