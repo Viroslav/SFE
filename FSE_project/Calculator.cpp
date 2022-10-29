@@ -9,7 +9,7 @@
 struct Token // есть изменения
 {
 	Token(char c) :
-		kind(c) 
+		kind(c)
 	{}
 
 	Token(char c, double v) :
@@ -31,9 +31,9 @@ struct Token_Stream // все ок
 		m_full(false), m_buffer(0)
 	{}
 
-	Token get(Token_Stream & token_stream);
+	Token get(Token_Stream& token_stream);
 
-	void putback(const Token & token);
+	void putback(const Token& token);
 
 	bool m_full;
 
@@ -50,18 +50,18 @@ struct Variable // новое
 	double value;
 };
 
-void calculate(Token_Stream & token_stream, char quit, char print);
-double expression(Token_Stream & token_stream);
-double term(Token_Stream & token_stream);
-double statement(Token_Stream & token_stream);
-double primary(Token_Stream & token_stream);
+void calculate(Token_Stream& token_stream, char quit, char print);
+double expression(Token_Stream& token_stream);
+double term(Token_Stream& token_stream);
+double statement(Token_Stream& token_stream);
+double primary(Token_Stream& token_stream);
 
 // новое
-double get_value(const std::string & n);
+double get_value(const std::string& n);
 void set_value(const std::string& n, double v, std::vector < Variable > variables);
 bool is_declared(const std::string& n);
 double define_name(const std::string& n, double v);
-double declaration(Token_Stream & token_stream);
+double declaration(Token_Stream& token_stream);
 
 int main()
 {
@@ -80,7 +80,7 @@ int main()
 	return 0;
 }
 
-void calculate(Token_Stream & token_stream, char quit, char print)
+void calculate(Token_Stream& token_stream, char quit, char print)
 {
 	const std::string prompt = "> ";
 	const std::string result = "= ";
@@ -106,7 +106,7 @@ void calculate(Token_Stream & token_stream, char quit, char print)
 	}
 }
 
-void Token_Stream::putback(const Token & token)
+void Token_Stream::putback(const Token& token)
 {
 	m_buffer = token;
 	m_full = true;
@@ -118,7 +118,7 @@ const char set = 'S'; // новое
 const char name = 'a'; // новое 
 const std::string declkey = "let"; // новое
 
-Token Token_Stream::get(Token_Stream & token_stream)
+Token Token_Stream::get(Token_Stream& token_stream)
 {
 	if (m_full)
 	{
@@ -152,17 +152,17 @@ Token Token_Stream::get(Token_Stream & token_stream)
 				s += c;
 			}
 			std::cin.putback(c);
-			
-
+			if (s == declkey)
 			{
 				return Token(set);
 			}
 			return Token(name, s);
 		}
 	}
+	return Token(c);
 }
 
-double primary(Token_Stream & token_stream)
+double primary(Token_Stream& token_stream)
 {
 	Token t = token_stream.get(token_stream);
 	switch (t.kind)
@@ -190,9 +190,10 @@ double primary(Token_Stream & token_stream)
 	case '+':
 		return primary(token_stream);
 	}
+	return 0.0;
 }
 
-double expression(Token_Stream & token_stream)
+double expression(Token_Stream& token_stream)
 {
 	double left = term(token_stream);
 	Token t = token_stream.get(token_stream);
@@ -216,7 +217,7 @@ double expression(Token_Stream & token_stream)
 	}
 }
 
-double statement(Token_Stream & token_stream) // новое
+double statement(Token_Stream& token_stream) // новое
 {
 	Token token = token_stream.get(token_stream);
 	switch (token.kind)
@@ -229,7 +230,7 @@ double statement(Token_Stream & token_stream) // новое
 	}
 }
 
-double term(Token_Stream & token_stream)
+double term(Token_Stream& token_stream)
 {
 	double left = primary(token_stream);
 	Token t = token_stream.get(token_stream);
@@ -289,20 +290,21 @@ double term(Token_Stream & token_stream)
 
 std::vector < Variable > variables;
 
-double get_value(const std::string & n)
+double get_value(const std::string& n)
 {
-	for (const Variable & variable : variables)
+	for (const Variable& variable : variables)
 	{
 		if (variable.name == n)
 		{
 			return variable.value;
 		}
 	}
+	return 0.0;
 }
 
-void set_value(const std::string & n, double v)
+void set_value(const std::string& n, double v)
 {
-	for (Variable & variable : variables)
+	for (Variable& variable : variables)
 	{
 		if (variable.name == n)
 		{
@@ -312,10 +314,10 @@ void set_value(const std::string & n, double v)
 	}
 }
 
-double declaration(Token_Stream & token_stream)
+double declaration(Token_Stream& token_stream)
 {
 	Token token = token_stream.get(token_stream);
-	std::string name = token.name; 
+	std::string name = token.name;
 	Token assume = token_stream.get(token_stream);
 	double value = expression(token_stream);
 	define_name(name, value);
@@ -323,9 +325,9 @@ double declaration(Token_Stream & token_stream)
 	return value;
 }
 
-bool is_declared(const std::string & n)
+bool is_declared(const std::string& n)
 {
-	for (const Variable & variable : variables)
+	for (const Variable& variable : variables)
 	{
 		if (variable.name == n)
 		{
@@ -335,7 +337,7 @@ bool is_declared(const std::string & n)
 	return false;
 }
 
-double define_name(const std::string & n, double v)
+double define_name(const std::string& n, double v)
 {
 	if (is_declared(n))
 	{
