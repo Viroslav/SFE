@@ -54,8 +54,8 @@ struct Variable // новое
 	double value;
 };
 
-template < typename S >
-void calculate(Token_Stream < S >& token_stream, char quit, char print);
+template < typename S, typename R >
+void calculate(Token_Stream < S >& token_stream, char quit, char print, R& stream_out);
 template < typename S >
 double expression(Token_Stream < S >& token_stream);
 template < typename S >
@@ -75,10 +75,8 @@ double declaration(Token_Stream < S >& token_stream);
 
 int main()
 {
-	std::cout.precision(3);
-	std::cout.setf(std::ios::fixed);
-
 	//std::ifstream fin("test.txt", std::ios::in);
+	//std::ofstream fout("result.txt", std::ios::out);
 
 	//Token_Stream < std::ifstream > token_stream{ fin };
 	Token_Stream < std::istream > token_stream{ std::cin };
@@ -86,24 +84,26 @@ int main()
 	const char quit = 'q';
 	const char print = ';';
 
-	calculate(token_stream, quit, print);
+	//calculate(token_stream, quit, print, fout);
+	calculate(token_stream, quit, print, std::cout);
 
-	system("pause");
+	//system("pause");
 
 	return 0;
 
 }
 
-template < typename S >
-void calculate(Token_Stream < S >& token_stream, char quit, char print)
+template < typename S, typename R >
+void calculate(Token_Stream < S >& token_stream, char quit, char print, R& stream_out)
 {
+	stream_out.precision(3);
+	stream_out.setf(std::ios::fixed);
+
 	const std::string prompt = "> ";
 	const std::string result = "= ";
 
 	while (token_stream.m_stream)
 	{
-		std::cout << prompt;
-
 		Token token = token_stream.get(token_stream);
 
 		while (token.kind == print)
@@ -117,7 +117,7 @@ void calculate(Token_Stream < S >& token_stream, char quit, char print)
 
 		token_stream.putback(token);
 
-		std::cout << "\n" << result << statement(token_stream) << '\n'; // expression
+		stream_out << result << statement(token_stream) << '\n'; // expression
 	}
 }
 
