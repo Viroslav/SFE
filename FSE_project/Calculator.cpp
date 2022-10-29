@@ -176,6 +176,7 @@ Token Token_Stream < S >::get(Token_Stream < S >& token_stream)
 			return Token(name, s);
 		}
 	}
+	return Token(c);
 }
 
 template < typename S >
@@ -207,6 +208,7 @@ double primary(Token_Stream < S >& token_stream)
 	case '+':
 		return primary(token_stream);
 	}
+	return 0.0;
 }
 
 template < typename S >
@@ -318,6 +320,7 @@ double get_value(const std::string& n)
 			return variable.value;
 		}
 	}
+	return 0.0;
 }
 
 void set_value(const std::string& n, double v)
