@@ -75,8 +75,6 @@ int main()
 
 	calculate(token_stream, quit, print);
 
-	system("pause");
-
 	return 0;
 }
 
