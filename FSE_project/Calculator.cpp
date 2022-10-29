@@ -5,6 +5,7 @@
 #include <iostream>
 #include <string>
 #include <ios>
+#include <fstream>
 
 struct Token // есть изменения
 {
@@ -25,10 +26,11 @@ struct Token // есть изменения
 	std::string name; // для переменных
 };
 
+template < typename S >
 struct Token_Stream // все ок
 {
-	Token_Stream() :
-		m_full(false), m_buffer(0)
+	Token_Stream(S& stream) :
+		m_full(false), m_buffer(0), m_stream(stream)
 	{}
 
 	Token get(Token_Stream& token_stream);
@@ -38,6 +40,8 @@ struct Token_Stream // все ок
 	bool m_full;
 
 	Token m_buffer;
+
+	S& m_stream;
 };
 
 struct Variable // новое
@@ -50,40 +54,53 @@ struct Variable // новое
 	double value;
 };
 
-void calculate(Token_Stream& token_stream, char quit, char print);
-double expression(Token_Stream& token_stream);
-double term(Token_Stream& token_stream);
-double statement(Token_Stream& token_stream);
-double primary(Token_Stream& token_stream);
+template < typename S >
+void calculate(Token_Stream < S >& token_stream, char quit, char print);
+template < typename S >
+double expression(Token_Stream < S >& token_stream);
+template < typename S >
+double term(Token_Stream < S >& token_stream);
+template < typename S >
+double statement(Token_Stream < S >& token_stream);
+template < typename S >
+double primary(Token_Stream < S >& token_stream);
 
 // новое
 double get_value(const std::string& n);
 void set_value(const std::string& n, double v, std::vector < Variable > variables);
 bool is_declared(const std::string& n);
 double define_name(const std::string& n, double v);
-double declaration(Token_Stream& token_stream);
+template < typename S >
+double declaration(Token_Stream < S >& token_stream);
 
 int main()
 {
 	std::cout.precision(3);
 	std::cout.setf(std::ios::fixed);
 
-	Token_Stream token_stream;
+	//std::ifstream fin("test.txt", std::ios::in);
+
+	//Token_Stream < std::ifstream > token_stream{ fin };
+	Token_Stream < std::istream > token_stream{ std::cin };
 
 	const char quit = 'q';
 	const char print = ';';
 
 	calculate(token_stream, quit, print);
 
+	system("pause");
+
 	return 0;
+
 }
 
-void calculate(Token_Stream& token_stream, char quit, char print)
+template < typename S >
+void calculate(Token_Stream < S >& token_stream, char quit, char print)
 {
 	const std::string prompt = "> ";
 	const std::string result = "= ";
 
-	while (std::cin)
+	while (token_stream.m_stream)
 	{
 		std::cout << prompt;
 
@@ -104,7 +121,8 @@ void calculate(Token_Stream& token_stream, char quit, char print)
 	}
 }
 
-void Token_Stream::putback(const Token& token)
+template < typename S >
+void Token_Stream < S >::putback(const Token& token)
 {
 	m_buffer = token;
 	m_full = true;
@@ -116,7 +134,8 @@ const char set = 'S'; // новое
 const char name = 'a'; // новое 
 const std::string declkey = "let"; // новое
 
-Token Token_Stream::get(Token_Stream& token_stream)
+template < typename S >
+Token Token_Stream < S >::get(Token_Stream < S >& token_stream)
 {
 	if (m_full)
 	{
@@ -124,7 +143,7 @@ Token Token_Stream::get(Token_Stream& token_stream)
 		return m_buffer;
 	}
 	char c;
-	std::cin >> c;
+	token_stream.m_stream >> c;
 	switch (c)
 	{
 	case 'q': case ';': case '(': case ')': case '{':
@@ -135,9 +154,9 @@ Token Token_Stream::get(Token_Stream& token_stream)
 	case '0': case '1': case '2': case '3': case '4':
 	case '5': case '6': case '7': case '8': case '9':
 	{
-		std::cin.putback(c);
+		token_stream.m_stream.putback(c);
 		double value;
-		std::cin >> value;
+		token_stream.m_stream >> value;
 		return Token(number, value);
 	}
 	default: // новое
@@ -145,11 +164,11 @@ Token Token_Stream::get(Token_Stream& token_stream)
 		{
 			std::string s;
 			s += c;
-			while (std::cin.get(c) && (isalpha(c) || isdigit(c)))
+			while (token_stream.m_stream.get(c) && (isalpha(c) || isdigit(c)))
 			{
 				s += c;
 			}
-			std::cin.putback(c);
+			token_stream.m_stream.putback(c);
 			if (s == declkey)
 			{
 				return Token(set);
@@ -157,10 +176,10 @@ Token Token_Stream::get(Token_Stream& token_stream)
 			return Token(name, s);
 		}
 	}
-	return Token(c);
 }
 
-double primary(Token_Stream& token_stream)
+template < typename S >
+double primary(Token_Stream < S >& token_stream)
 {
 	Token t = token_stream.get(token_stream);
 	switch (t.kind)
@@ -188,10 +207,10 @@ double primary(Token_Stream& token_stream)
 	case '+':
 		return primary(token_stream);
 	}
-	return 0.0;
 }
 
-double expression(Token_Stream& token_stream)
+template < typename S >
+double expression(Token_Stream  < S >& token_stream)
 {
 	double left = term(token_stream);
 	Token t = token_stream.get(token_stream);
@@ -215,7 +234,8 @@ double expression(Token_Stream& token_stream)
 	}
 }
 
-double statement(Token_Stream& token_stream) // новое
+template < typename S >
+double statement(Token_Stream < S >& token_stream) // новое
 {
 	Token token = token_stream.get(token_stream);
 	switch (token.kind)
@@ -228,7 +248,8 @@ double statement(Token_Stream& token_stream) // новое
 	}
 }
 
-double term(Token_Stream& token_stream)
+template < typename S >
+double term(Token_Stream < S >& token_stream)
 {
 	double left = primary(token_stream);
 	Token t = token_stream.get(token_stream);
@@ -245,7 +266,7 @@ double term(Token_Stream& token_stream)
 		}
 		case '!':
 		{
-			for (int i = left - 1; i > 1; i--)
+			for (int i = static_cast <int> (left) - 1; i > 1; i--)
 			{
 				left *= i;
 			}
@@ -297,7 +318,6 @@ double get_value(const std::string& n)
 			return variable.value;
 		}
 	}
-	return 0.0;
 }
 
 void set_value(const std::string& n, double v)
@@ -312,7 +332,8 @@ void set_value(const std::string& n, double v)
 	}
 }
 
-double declaration(Token_Stream& token_stream)
+template < typename S >
+double declaration(Token_Stream < S >& token_stream)
 {
 	Token token = token_stream.get(token_stream);
 	std::string name = token.name;
