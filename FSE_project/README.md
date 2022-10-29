@@ -12,10 +12,10 @@ The programm can parse and calculate different mathematical expressions.
 - use ";" in the end of the string (!!!)
 - to calculate simple mathematical expression just type it
 - to use variables you need to set them first
-- to set variables you need to type "let [variable_name] = [value];"
+- to set variables you need to type "`let` [variable_name] = [value];"
 - [variable_name] can be only one (lowercase or uppercase) letter (but not "p", "s" or "q" as it is already in list of arithmetic operations or used for service)
-- to change variable value use "let [variable_name] = [value];" again
-- to exit the programm type "q"
+- to change variable value use "`let` [variable_name] = [value];" again
+- to exit the programm type "`q`"
 
 ## Some examples of usage:
 
