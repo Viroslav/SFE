@@ -27,7 +27,7 @@ The programm can parse and calculate different mathematical expressions.
 ![alt text](https://github.com/Viroslav/SFE/blob/master/FSE_project/pictures/programm%20work%206.png)
 
 # Quickstart
- --- some text---
+ to install in linux from nothing
  enter the fillowing commands:
 
 ```
@@ -39,3 +39,13 @@ make
 ./Calculator.out
 ```
 
+to install in docker
+enter the fillowing commands:
+```
+apt update
+apt install git build-essential -y
+git clone https://github.com/Viroslav/SFE.git
+cd SFE/FSE_project
+make
+./Calculator.out
+```
