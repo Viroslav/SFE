@@ -28,7 +28,7 @@ The programm can parse and calculate different mathematical expressions.
 
 # Quickstart
  to install in linux from nothing
- enter the fillowing commands:
+ enter the following commands:
 
 ```
 sudo apt update
@@ -39,13 +39,4 @@ make
 ./Calculator.out
 ```
 
-to install in docker
-enter the fillowing commands:
-```
-apt update
-apt install git build-essential -y
-git clone https://github.com/Viroslav/SFE.git
-cd SFE/FSE_project
-make
-./Calculator.out
-```
+If you work from root just not use sudo.
