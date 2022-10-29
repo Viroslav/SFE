@@ -1,0 +1,14 @@
+.PHONY:	all clean
+
+IN_FILENAME=Calculator.cpp
+OUT_FILENAME=Calculator.out
+COMPILER_NAME=g++
+COMPILATION_OPT=-Wall -g -o $(OUT_FILENAME)
+
+all:	$(OUT_FILENAME)
+
+$(OUT_FILENAME):   $(IN_FILENAME)
+	$(COMPILER_NAME) $(COMPILATION_OPT) $(IN_FILENAME) 
+
+clean:
+	rm $(OUT_FILENAME)
