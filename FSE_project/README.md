@@ -25,3 +25,17 @@ The programm can parse and calculate different mathematical expressions.
 ![alt text](https://github.com/Viroslav/SFE/blob/master/FSE_project/pictures/programm%20work%204.png)
 ![alt text](https://github.com/Viroslav/SFE/blob/master/FSE_project/pictures/programm%20work%205.png)
 ![alt text](https://github.com/Viroslav/SFE/blob/master/FSE_project/pictures/programm%20work%206.png)
+
+# Quickstart
+ --- some text---
+ enter the fillowing commands:
+
+```
+sudo apt update
+sudo apt install git build-essential -y
+git clone https://github.com/Viroslav/SFE.git
+cd SFE/FSE_project
+make
+./Calculator.out
+```
+
