@@ -1,3 +1,3 @@
 #!/bin/sh
 make test
-./test
+./test.out
