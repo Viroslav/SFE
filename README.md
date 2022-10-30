@@ -19,12 +19,12 @@ The programm can parse and calculate different mathematical expressions.
 
 ## Some examples of usage:
 
-![alt text](https://github.com/Viroslav/SFE/blob/master/FSE_project/pictures/programm%20work%201.png)
-![alt text](https://github.com/Viroslav/SFE/blob/master/FSE_project/pictures/programm%20work%202.png)
-![alt text](https://github.com/Viroslav/SFE/blob/master/FSE_project/pictures/programm%20work%203.png)
-![alt text](https://github.com/Viroslav/SFE/blob/master/FSE_project/pictures/programm%20work%204.png)
-![alt text](https://github.com/Viroslav/SFE/blob/master/FSE_project/pictures/programm%20work%205.png)
-![alt text](https://github.com/Viroslav/SFE/blob/master/FSE_project/pictures/programm%20work%206.png)
+![alt text](https://github.com/Viroslav/SFE/blob/master/pictures/programm%20work%201.png)
+![alt text](https://github.com/Viroslav/SFE/blob/master/pictures/programm%20work%202.png)
+![alt text](https://github.com/Viroslav/SFE/blob/master/pictures/programm%20work%203.png)
+![alt text](https://github.com/Viroslav/SFE/blob/master/pictures/programm%20work%204.png)
+![alt text](https://github.com/Viroslav/SFE/blob/master/pictures/programm%20work%205.png)
+![alt text](https://github.com/Viroslav/SFE/blob/master/pictures/programm%20work%206.png)
 
 # Quickstart
  to install in linux from nothing
