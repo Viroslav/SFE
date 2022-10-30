@@ -40,3 +40,14 @@ make
 ```
 
 If you work from root just not use sudo.
+
+# Tests
+
+to run tests 
+enter the following commands after quikstart:
+
+```
+make test
+./test.out
+```
+
