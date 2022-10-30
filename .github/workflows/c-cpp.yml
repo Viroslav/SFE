@@ -42,6 +42,21 @@ jobs:
         run: docker build -t project:v1 .
       - name: run the docker image
         run: docker run project:v1
+#       -
+#         name: install deps
+#         run: sudo apt install g++
+#       -
+#         name: run cpp file
+#         run: g++ main.cpp matrix_functions.cpp -fopenmp -o main
+      - 
+        name: change mode
+        run: chmod +x run.sh
       -
-        name: install deps
-        run: sudo apt install g++
+        name: execute
+        run: ./run.sh
+      -
+        name: change mode of test file
+        run: chmod +x test_run.sh
+      -
+        name: test
+        run: ./test_run.sh
