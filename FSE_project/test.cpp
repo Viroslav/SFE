@@ -57,7 +57,7 @@ bool test(int test_num)
 int main()
 {
 	int num_of_passed = 0;
-	int total_num = 4;
+	int total_num = 12;
         for (int i = 0; i < total_num; i++)
 	{
 		bool flag = test(i);
