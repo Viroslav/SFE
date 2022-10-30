@@ -1,6 +1,0 @@
-some text in baz.txt
-
-Nekit krasav4ik
-
-
-git's the best
