@@ -1,0 +1,47 @@
+# name: C/C++ CI
+
+# on:
+#   push:
+#     branches: [ "main" ]
+#   pull_request:
+#     branches: [ "main" ]
+
+# jobs:
+#   build:
+
+#     runs-on: ubuntu-latest
+
+#     steps:
+#     - uses: actions/checkout@v3
+#     - name: docker
+#       run: docker build -t project:v1  -f Dockerfile .
+#     - name: docker_run
+#       run: docker -rm -t project:v1
+#     - name: execute
+#       run: g++ main_matrix.cpp -fopenmp -o main
+#     - name: configure
+#       run: ./configure
+#     - name: make
+#       run: make
+#     - name: make check
+#       run: make check
+#     - name: make distcheck
+#       run: make distcheck
+
+name: image runner
+on: 
+  push
+jobs:
+  image_building:
+    name: The only job
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull repo
+        uses: actions/checkout@v3
+      - name: build image
+        run: docker build -t project:v1 .
+      - name: run the docker image
+        run: docker run project:v1
+      -
+        name: install deps
+        run: sudo apt install g++
