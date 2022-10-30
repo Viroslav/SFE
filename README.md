@@ -34,7 +34,7 @@ The programm can parse and calculate different mathematical expressions.
 sudo apt update
 sudo apt install git build-essential -y
 git clone https://github.com/Viroslav/SFE.git
-cd SFE/FSE_project
+cd SFE
 make
 ./Calculator.out
 ```
